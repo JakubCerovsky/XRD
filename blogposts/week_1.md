@@ -49,14 +49,35 @@ The more realistic and engaging the experience (immersion), the stronger the use
 
 ### How is input technology and interactions different in XR?
 
-### What problems can XR solve?
+In a traditional virtual medium, inputs are abstracted into buttons, joysticks, keyboards, mice, or touchscreens. Complex actions like walking, opening a door, or eating can be reduced to a single button press or gesture. The physical motion is minimal as the computer interprets symbolic inputs. This breaks the immersion of interaction.
+
+Thats why input technology in XR is trying to be as close to the real thing. As an example in the game minecraft to eat you press and hold a button and it just kind of happens. Meanwhile in the VR version of the same game its much more high fidelity as to eat you have to pick up food with hand tracking, moving it toward your face, triggering a “bite”.
 
 ---
 
-_Written by: The Whole Group_
+_Written by: Marcus_
+
+---
+
+### What problems can XR solve?
+
+Besides offering more diverse entertainment, XR can solve diverse real-world problems.
+
+It enables safer and more effective training in fields such as healthcare, aviation, and manufacturing by simulating complex or hazardous environments without real-world risks.
+
+In education, XR creates immersive classrooms where students can explore abstract concepts or historical events as if they were physically present. And it can also make reading more interesting by overlaying a replica of what the person is studying about.
+
+It also enhances remote collaboration, allowing people in different parts of the world to interact with 3D content in shared virtual spaces. Think of having a very good oil engineer across the world guide you hot to fix the oil rig.
+
+In healthcare, XR supports therapy, rehabilitation, and pain management through controlled, engaging environments.
+Additionally, it improves accessibility by offering virtual mobility options and adaptive interfaces for people with disabilities. Beyond this, XR helps architects, engineers, and designers rapidly prototype and visualize projects before physical production, saving both time and cost. Truly the posibilities are endless...
+
+---
+
+_Written by: Marcus_
 
 ---
 
 ### Resources
 
-- [title](https://www.example.com)
+- Course Introduction Presentation
