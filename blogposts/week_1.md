@@ -6,7 +6,7 @@ During the first lecture we were introduced to the concept of the classes, and s
 
 ## Introduction to Extended Reality
 
-#### What is AR/VR/AV/MR/XR and how do the terminologies compare?
+### What is AR/VR/AV/MR/XR and how do the terminologies compare?
 
 Extended Reality (XR) is a superset of multiple terminologies:
 
@@ -20,11 +20,11 @@ Extended Reality (XR) is a superset of multiple terminologies:
 
 -
 
-#### How do XR applications compare to traditional desktop and mobile applications?
+### How do XR applications compare to traditional desktop and mobile applications?
 
 Extended Reality adds the immersive feeling of interactions where our presence actually matters, and are not just bound to buttons.
 
-#### What use cases does XR have?
+### What use cases does XR have?
 
 XR can benefit us in many different use cases, due to its flexibility and potential to simulate real life use cases while minimizing downsides. <br>
 Examples of this can be found in the following areas:
@@ -67,20 +67,55 @@ XR has a few key elements that give value to the end user:
 _Written by: Cosmin_
 
 ---
-#### How does current XR technology compare to an idealistic future vision of the technology?
 
-#### How does immersion and presence factor into XR?
+### How does current XR technology compare to an idealistic future vision of the technology?
+| Aspect | Today | Ideal Future |
+| ------ | ------ | ------------ |
+| Headsets | Bulky, heavy head‑mounted boxes (session use) | Light, glasses‑like, all‑day wearable |
+| Visuals | Decent clarity, limited FOV, fixed focal plane | Near‑human sharpness, wide FOV, natural depth (varifocal/light field) |
+| Interaction | Controllers + basic hand/eye tracking | Seamless multimodal: hands, eyes, voice, subtle gestures, rich haptics |
+| World understanding | Tracks shapes; basic meshes | Rich, persistent, semantic shared spatial maps |
+| Performance | Battery & heat constraints; compromises | Hybrid local + edge/cloud, smart foveated/neural rendering low latency |
+| AR blending | Noisy, laggy passthrough; limited color accuracy | Photoreal, instant blending indistinguishable from real |
+| Haptics | Simple vibration | Believable touch: force, texture, temperature |
+| Ecosystem | Closed, fragmented platforms | Open standards, portable spatial content |
+| Adoption | Expensive, niche | Affordable, mainstream |
+| Trust | Data/privacy concerns | Strong on‑device processing & clear user control |
 
-#### How is input technology and interactions different in XR?
+### How does immersion and presence factor into XR?
+The more realistic and engaging the experience (immersion), the stronger the user's feeling of "being there" (presence). High presence makes XR more effective for learning, training, entertainment and empathy, while low presence, such as getting sick after a few hours of wearing the VR glasses, can break the illusion and reduce impact. Design choices in visuals, audio, interaction and feedback all influence these factors.
 
-#### What problems can XR solve?
+### How is input technology and interactions different in XR?
+
+In a traditional virtual medium, inputs are abstracted into buttons, joysticks, keyboards, mice, or touchscreens. Complex actions like walking, opening a door, or eating can be reduced to a single button press or gesture. The physical motion is minimal as the computer interprets symbolic inputs. This breaks the immersion of interaction.
+
+Thats why input technology in XR is trying to be as close to the real thing. As an example in the game minecraft to eat you press and hold a button and it just kind of happens. Meanwhile in the VR version of the same game its much more high fidelity as to eat you have to pick up food with hand tracking, moving it toward your face, triggering a “bite”.
 
 ---
 
-_Written by: The Whole Group_
+_Written by: Marcus_
+
+---
+
+### What problems can XR solve?
+
+Besides offering more diverse entertainment, XR can solve diverse real-world problems.
+
+It enables safer and more effective training in fields such as healthcare, aviation, and manufacturing by simulating complex or hazardous environments without real-world risks.
+
+In education, XR creates immersive classrooms where students can explore abstract concepts or historical events as if they were physically present. And it can also make reading more interesting by overlaying a replica of what the person is studying about.
+
+It also enhances remote collaboration, allowing people in different parts of the world to interact with 3D content in shared virtual spaces. Think of having a very good oil engineer across the world guide you hot to fix the oil rig.
+
+In healthcare, XR supports therapy, rehabilitation, and pain management through controlled, engaging environments.
+Additionally, it improves accessibility by offering virtual mobility options and adaptive interfaces for people with disabilities. Beyond this, XR helps architects, engineers, and designers rapidly prototype and visualize projects before physical production, saving both time and cost. Truly the posibilities are endless...
+
+---
+
+_Written by: Marcus_
 
 ---
 
 ### Resources
 
-- [title](https://www.example.com)
+- Course Introduction Presentation
