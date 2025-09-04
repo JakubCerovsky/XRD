@@ -49,7 +49,11 @@ AR applications could be used to show the user how certain products would look i
 - Product Development & Art (ex Blender)
 - Virtual tourism
 - Architecture & Construction
+---
 
+_Written by: Cosmin_
+
+---
 #### How does XR add value to the end user?
 XR has a few key elements that give value to the end user:
 
@@ -58,7 +62,11 @@ XR has a few key elements that give value to the end user:
 - Convenience & Accessibility (for some high stakes processes or in cases where the tools/resources are limited)
 - Efficiency & Structure (instructions can be displayed in/next to the area of interest)
 - Entertainment
+---
 
+_Written by: Cosmin_
+
+---
 #### How does current XR technology compare to an idealistic future vision of the technology?
 
 #### How does immersion and presence factor into XR?
