@@ -12,17 +12,45 @@ Extended Reality (XR) is a superset of multiple terminologies:
 
 **Augmented Reality (AR)**
 
-- **Virtual Reality (VR)**
+AR projects digital things onto a real world environment.
 
-- **Augmented Virtuality (AV)**
+**Virtual Reality (VR)**
 
-- **Mixed Reality**
+Users are immersed within completely virtual environment. It is fully dettached from the physical world unlike other realities.
 
--
+**Augmented Virtuality (AV)**
+
+It does basically the opposite of the AR. It digitalizes a physical object into a virtual environment.
+
+**Mixed Reality (MR)**
+
+Mixed Reality is a concept which combines all of the realities together. User can experience an integration of both realities.
+
+---
+
+_Written by: Jakub_
+
+---
 
 ### How do XR applications compare to traditional desktop and mobile applications?
 
-Extended Reality adds the immersive feeling of interactions where our presence actually matters, and are not just bound to buttons.
+XR adds the immersive feeling of interactions where our presence actually matters, and are not just bound to 2D screens.
+
+|                   | **XR Applications**                                                                  | **Traditional Applications**                                                 |
+| ----------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| **Concept**       | The way it allows users to engage provides them with a realistic form of experience. | Users may lack the feeling of immersion coming from the indirect experience. |
+| **Advantages**    | + Improves productivity                                                              | + Accessible on (mostly) all devices                                         |
+|                   | + Schooling and Training                                                             | + Developers have years of experience                                        |
+|                   | + Visualization                                                                      | + Cheap                                                                      |
+| **Disadvantages** | - Hardware Limitations                                                               | - Lacks sense of scale                                                       |
+|                   | - Lack of content                                                                    | - Less intuitive                                                             |
+|                   | - Expensive                                                                          |                                                                              |
+
+---
+
+_Written by: Jakub_
+
+---
 
 ### What use cases does XR have?
 
@@ -81,3 +109,5 @@ _Written by: Marcus_
 ### Resources
 
 - Course Introduction Presentation
+- [What is XR?](https://www.autodesk.com/design-make/articles/what-is-xr)
+- [XR Pros and Cons](https://realtimear.com/blogs/xr-pros-and-cons/)
