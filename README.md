@@ -1,6 +1,27 @@
-# XRD
+# Library AR Navigator
 
-This XRD Development Portfolio is result of a XRD class introduced to us in 7th semester at the VIA University College. The focus of this project is a ...
+This AR application helps you find a specific book in a school library. You scan a printed poster with a QR code. That single scan does two things:
+
+1. Localizes the AR session (knows where you are) via image tracking of the poster background.
+2. Picks the target book via the QR payload (e.g., isbn=...).
+
+Then the app renders a path to the correct shelf.
+
+### Use Cases
+
+**Student**: _“Find this book now”_
+
+- Scan the entrance poster’s QR for a specific ISBN; the app locks position and draws a floor path straight to the correct shelf segment.
+
+**Librarian**: _“Where do I reshelve this?”_
+
+- Scan the book’s barcode/ISBN, instantly get the shelf ID and a short route back to its exact bay.
+
+### Video Demonstration
+
+<!-- TODO: Input link -->
+
+[Library AR Nabigator Demo]()
 
 ### Contributors:
 
@@ -9,14 +30,13 @@ This XRD Development Portfolio is result of a XRD class introduced to us in 7th 
 - [Cosmin Gabriel Demian](https://github.com/cosmindemian)
 - [Marcus Cristofer Mitelea](https://github.com/mitmarcus)
 
-### Related Projects
-
-Second part of the portfolio
-
 ### Tools Used
 
 - [Unity 6](https://unity.com/)
-- [Meta Quest Link](https://www.meta.com/en-gb/help/quest/1517439565442928/)
+  - AR Foundation, ARCore, ARKit XR Plugin, XR Management
+- [3D Scanner App](https://3dscannerapp.com/)
+
+<!-- TODO: Do we have some? -->
 
 ### Code References
 
