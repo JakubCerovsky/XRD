@@ -2,7 +2,7 @@
 
 This AR application helps you find a specific book in a school library. You scan a printed poster with a QR code. That single scan does two things:
 
-1. Localizes the AR session (knows where you are) via image tracking of the poster background.
+1. Localizes the AR session (knows where you are) via image-tracking the poster background.
 2. Picks the target book via the QR payload (e.g., isbn=...).
 
 Then the app renders a path to the correct shelf.
@@ -21,7 +21,7 @@ Then the app renders a path to the correct shelf.
 
 <!-- TODO: Input link -->
 
-[Library AR Nabigator Demo]()
+[Library AR Navigator Demo]()
 
 ### Contributors:
 
@@ -40,6 +40,6 @@ Then the app renders a path to the correct shelf.
 
 ### Code References
 
-Following resources were used during the development process of the project.
+The following resources were used during the project development process.
 
 - [title](https://www.example.com)
