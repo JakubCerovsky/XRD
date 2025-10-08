@@ -18,13 +18,9 @@ Based on the progress from last week, we used the completed scan and matched it 
 
 We debated whether to create our own navigation system or use an existing package. Considering the limited timespan for the project, we decided to use an existing asset. We researched multiple options, including:
 
-- [Guidance Line](https://assetstore.unity.com/packages/tools/game-toolkits/guidance-line-303873)
 - [SLAM](https://community.arm.com/arm-community-blogs/b/mobile-graphics-and-gaming-blog/posts/indoor-real-time-navigation-with-slam-on-your-mobile)
 - [Unity NavMesh](https://learn.unity.com/tutorial/unity-navmesh#5c7f8528edbc2a002053b498)
-
-#### Guidance Line
-
-We took the time to research and test this shared asset with hopes that it would be exactly what we needed. However, we learned that this asset supports only hardcoded paths. While that would work nicely for a demonstration of the project idea, it would need to be replaced for a production-scale version of the project.
+- [Guidance Line](https://assetstore.unity.com/packages/tools/game-toolkits/guidance-line-303873)
 
 #### SLAM (Simultaneous Localization and Mapping)
 
@@ -46,6 +42,17 @@ This worked as expected in the simulated environment, but aligning the NavMesh w
 #### Player Object
 
 We have started preparing the **Player Object**, which represents the initial position of the user simulated in the environment. The component used for this is the **NavMesh Agent**, which has the humanoid type and acts as a user in the simulation. Its parameters can be configured so the path maintains specific offsets within the environment.
+
+#### Guidance Line
+
+We took the time to research and test this shared asset with hopes that it would be exactly what we needed. However, we learned that this asset supports only hardcoded paths. While that would work nicely for a demonstration of the project idea, it would need to be replaced for a production-scale version of the project. What we decided to do was enhance it to work automatically with our NavMesh system.
+
+We created a new script `GuidanceLineAuto.cs` that:
+
+- **Automatically calculates paths** using `NavMesh.CalculatePath()` instead of manual checkpoints
+- **Generates smooth curved lines** that route around obstacles using the NavMesh data
+- **Updates paths in real-time** when targets move or users deviate from the expected route
+- **Optimizes performance** by only recalculating when necessary
 
 #### Destination Objects
 
