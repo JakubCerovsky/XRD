@@ -1,4 +1,4 @@
-# Lab day 1
+# Lab Day 1
 
 ## Introduction to our mobile AR project
 
@@ -24,6 +24,7 @@ We used [Blender](https://www.blender.org/) to align the origin of the scan obje
 ### AR tracking
 
 For AR tracking, we used [AR Tracked Image Manager component](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@6.0/manual/features/image-tracking.html). Key components for this are:
+
 - An image of the patch and set the texture as a sprite
 - An XR Reference Image Library with the photo inside, specifying the size of it in meters (in our case 0.08x0.08m)
 - The scanned model of the room
@@ -51,12 +52,12 @@ Script writing and testing, mostly trying to replicate what AR Tracked Image Man
 
 ### Version control
 
-We are using Git with GitHub and Git LFS for version control. 
+We are using Git with GitHub and Git LFS for version control.
 
 Normally, Git is optimized for **text-based files** like code, but it struggles with **large binary files**. <br>
-And Game development tends to have a lot of binary files, thus our choice of using it. 
+And Game development tends to have a lot of binary files, thus our choice of using it.
 
-## Reflections 
+## Reflections
 
 With most of us having close to no experience in Unity, this first lab day was a great opportunity to familiarize ourselves with the workflow, while also making some good progress on our project. <br>
 

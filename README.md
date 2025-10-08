@@ -7,6 +7,8 @@ This AR application helps you find a specific book in a school library. You scan
 
 Then the app renders a path to the correct shelf.
 
+![Sequence Diagram](./images/sequence_diagram.jpg)
+
 ### Use Cases
 
 **Student**: _“Find this book now”_
