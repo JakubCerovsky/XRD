@@ -72,7 +72,36 @@ namespace GuidanceLine
         void Start()
         {
             InitializeLine();
-            
+            // If no startPoint was assigned in the inspector, try to use the main camera
+            if (startPoint == null)
+            {
+                if (Camera.main != null)
+                {
+                    startPoint = Camera.main.transform;
+                    Debug.Log("GuidanceLineAuto: startPoint not set - using Main Camera as startPoint.");
+                }
+                else
+                {
+                    // Fallback: pick the first Camera in the scene
+                    Camera found = GameObject.FindObjectOfType<Camera>();
+                    if (found != null)
+                    {
+                        startPoint = found.transform;
+                        Debug.LogWarning("GuidanceLineAuto: Camera.main is null - using first Camera found as startPoint.");
+                    }
+                    else
+                    {
+                        Debug.LogWarning("GuidanceLineAuto: No Camera found in scene. Please assign a startPoint or add a Camera.");
+                    }
+                }
+            }
+
+            // Initialize lastStartPosition if we have a startPoint now
+            if (startPoint != null)
+            {
+                lastStartPosition = startPoint.position;
+            }
+
             // Wait a frame before calculating path to ensure NavMesh is loaded
             Invoke(nameof(CalculatePath), 0.1f);
         }
