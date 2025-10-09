@@ -78,19 +78,7 @@ public class ISBNInputValidator : MonoBehaviour
         }
 
         // Try to find BookDatabase if not assigned
-        if (checkBookDatabase && bookDatabase == null)
-        {
-            bookDatabase = FindObjectOfType<BookDatabase>();
-            if (bookDatabase == null)
-            {
-                Debug.LogWarning("[ISBNInputValidator] BookDatabase not found in scene. Database check will be disabled.");
-                checkBookDatabase = false;
-            }
-            else
-            {
-                Debug.Log("[ISBNInputValidator] BookDatabase found automatically.");
-            }
-        }
+        FindBookDatabaseIfNeeded();
 
         // Subscribe to input field events
         if (validateOnChange)
@@ -102,6 +90,36 @@ public class ISBNInputValidator : MonoBehaviour
 
         // Set initial color
         UpdateVisualFeedback(ValidationState.Valid);
+    }
+
+    /// <summary>
+    /// Finds the BookDatabase in the scene if not already assigned.
+    /// Called at Start and before each validation if database is still null.
+    /// </summary>
+    private void FindBookDatabaseIfNeeded()
+    {
+        if (!checkBookDatabase)
+        {
+            return;
+        }
+
+        if (bookDatabase == null)
+        {
+            // Try to find BookDatabase including inactive objects
+            bookDatabase = FindObjectOfType<BookDatabase>(true);
+            
+            if (bookDatabase == null)
+            {
+                Debug.LogError("[ISBNInputValidator] ❌ BookDatabase not found in scene!");
+                Debug.LogError("[ISBNInputValidator] SOLUTION: Drag 'Assets/LibraryEnvironment.prefab' into your scene hierarchy.");
+                Debug.LogError("[ISBNInputValidator] The BookDatabase component is inside this prefab.");
+            }
+            else
+            {
+                Debug.Log($"[ISBNInputValidator] ✓ BookDatabase found automatically on GameObject: '{bookDatabase.gameObject.name}'");
+                Debug.Log($"[ISBNInputValidator] Database contains {bookDatabase.GetBookCount()} book(s)");
+            }
+        }
     }
 
     void OnDestroy()
@@ -156,24 +174,38 @@ public class ISBNInputValidator : MonoBehaviour
         }
 
         // If format is valid and database check is enabled, check if book exists in database
-        if (checkBookDatabase && bookDatabase != null)
+        if (checkBookDatabase)
         {
-            GameObject bookObject = bookDatabase.FindBookByISBN(value);
+            // Try to find database if it wasn't found before (in case prefab was instantiated late)
+            FindBookDatabaseIfNeeded();
             
-            if (bookObject != null)
+            if (bookDatabase != null)
             {
-                isValid = true;
-                currentState = ValidationState.Valid;
-                Debug.Log($"[ISBNInputValidator] Valid ISBN and book found in database: '{value}' -> {bookObject.name}");
+                GameObject bookObject = bookDatabase.FindBookByISBN(value);
+                
+                if (bookObject != null)
+                {
+                    isValid = true;
+                    currentState = ValidationState.Valid;
+                    Debug.Log($"[ISBNInputValidator] ✓ Valid ISBN and book found in database: '{value}' -> {bookObject.name}");
+                }
+                else
+                {
+                    isValid = false;
+                    currentState = ValidationState.NotFoundInDB;
+                    Debug.Log($"[ISBNInputValidator] ⚠ Valid ISBN format but book not found in database: '{value}'");
+                }
+
+                UpdateVisualFeedback(currentState);
             }
             else
             {
-                isValid = false;
-                currentState = ValidationState.NotFoundInDB;
-                Debug.Log($"[ISBNInputValidator] Valid ISBN format but book not found in database: '{value}'");
+                // Database still not found - show as format valid only
+                isValid = true;
+                currentState = ValidationState.Valid;
+                UpdateVisualFeedback(currentState);
+                Debug.LogWarning($"[ISBNInputValidator] BookDatabase not available. Only format validation performed for: '{value}'");
             }
-
-            UpdateVisualFeedback(currentState);
         }
         else
         {
@@ -181,7 +213,7 @@ public class ISBNInputValidator : MonoBehaviour
             isValid = formatValid;
             currentState = ValidationState.Valid;
             UpdateVisualFeedback(currentState);
-            Debug.Log($"[ISBNInputValidator] Valid ISBN format: '{value}'");
+            Debug.Log($"[ISBNInputValidator] Valid ISBN format: '{value}' (database check disabled)");
         }
     }
 
