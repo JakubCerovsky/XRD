@@ -52,6 +52,10 @@ namespace GuidanceLine
         [SerializeField]
         private float maxPathAge = 5f;
 
+        [Tooltip("How far to search when sampling the NavMesh for the start position")]
+        [SerializeField]
+        private float navMeshSampleDistance = 5f;
+
         [Header("Debug")]
         [Tooltip("Show debug spheres along the path")]
         public bool showDebugGizmos = true;
@@ -72,7 +76,7 @@ namespace GuidanceLine
         void Start()
         {
             InitializeLine();
-            // If no startPoint was assigned in the inspector, try to use the main camera
+            // If no startPoint was assigned in the inspector, use the main camera (or the first camera found)
             if (startPoint == null)
             {
                 if (Camera.main != null)
@@ -183,10 +187,13 @@ namespace GuidanceLine
                 if (endPoint != null) lastTargetPosition = endPoint.position;
             }
 
+            // Sample the start position on the NavMesh so we compare ground-projected positions (important on mobile)
+            Vector3 sampledStartPos = startPoint != null ? GetClosestNavPosition(startPoint.position, navMeshSampleDistance) : Vector3.zero;
+
             // Check if reached current checkpoint (removes walked sections)
             if (currentCheckpoints.Count > 0 && currentCheckpointIndex < currentCheckpoints.Count)
             {
-                float distanceToCheckpoint = Vector3.Distance(startPoint.position, currentCheckpoints[currentCheckpointIndex]);
+                float distanceToCheckpoint = Vector3.Distance(sampledStartPos, currentCheckpoints[currentCheckpointIndex]);
                 if (distanceToCheckpoint <= checkpointDistanceThreshold)
                 {
                     currentCheckpointIndex++;
@@ -197,6 +204,31 @@ namespace GuidanceLine
             // Draw the line (automatically shortens as checkpoints are passed)
             DrawCurvedLine();
         }
+
+        /// <summary>
+        /// Returns the closest position on the NavMesh to the given world position. If sampling fails, returns the original position.
+        /// </summary>
+        private Vector3 GetClosestNavPosition(Vector3 worldPos, float maxDistance)
+        {
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(worldPos, out hit, maxDistance, navMeshAreaMask))
+            {
+                Vector3 p = hit.position;
+                p.y += lineHeightOffset; // keep same visual offset as checkpoints
+                return p;
+            }
+            // fallback to original world pos (with offset)
+            Vector3 fallback = worldPos;
+            fallback.y += lineHeightOffset;
+            return fallback;
+        }
+
+        /// <summary>
+        /// Attempts to find an XR/AR origin transform in the scene.
+        /// Looks for common XR origin object names, otherwise walks up from Camera.main.
+        /// Returns null if none found.
+        /// </summary>
+        // ...existing code...
 
         void CalculatePath()
         {
@@ -295,7 +327,8 @@ namespace GuidanceLine
 
             // Create array of points to draw (start + active checkpoints + end)
             List<Vector3> pathPoints = new List<Vector3>();
-            pathPoints.Add(startPoint.position);
+            Vector3 sampledStartPos = startPoint != null ? GetClosestNavPosition(startPoint.position, navMeshSampleDistance) : Vector3.zero;
+            pathPoints.Add(sampledStartPos);
 
             // Add only checkpoints we haven't passed yet
             for (int i = currentCheckpointIndex; i < currentCheckpoints.Count; i++)
@@ -335,8 +368,16 @@ namespace GuidanceLine
                 }
             }
 
+            // Resize array if we didn't fill all slots (defensive)
+            if (index != allPoints.Length)
+            {
+                Vector3[] trimmed = new Vector3[index];
+                for (int i = 0; i < index; i++) trimmed[i] = allPoints[i];
+                allPoints = trimmed;
+            }
+
             // Update LineRenderer
-            lineRenderer.positionCount = index;
+            lineRenderer.positionCount = allPoints.Length;
             lineRenderer.SetPositions(allPoints);
         }
 
