@@ -15,8 +15,9 @@ Text file consitsing links to the repositories must be uploaded to WiseFlow befo
   - [ ] Video Demonstration
 - [ ] DevBlog
   - [ ] Team Reflections
-  - [ ] 1st Week
-  - [ ] Lab Week 2
+  - [x] 1st Week
+  - [x] Lab Week 1
+  - [x] Lab Week 2
   - [ ] Lab Week 3
   - [ ] Lab Week 4
   - [ ] Lab Week 5
@@ -33,7 +34,7 @@ Text file consitsing links to the repositories must be uploaded to WiseFlow befo
 
 ### Answered Questions within DevBlogs
 
-- [ ] What is AR/VR/AV/MR/XR and how do the terminologies compare?
+- [x] What is AR/VR/AV/MR/XR and how do the terminologies compare?
 - [ ] How does our projects add value to the end user?
 - [ ] How does our applications benifit from XR?
 - [ ] How does markerless tracking work?
