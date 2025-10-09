@@ -80,6 +80,15 @@ public class LibraryNavigationUIManager : MonoBehaviour
     [SerializeField]
     private string bookTag = "Book";
 
+    [Header("Book Visibility")]
+    [Tooltip("Hide all books at startup and only show the searched book")]
+    [SerializeField]
+    private bool hideAllBooksAtStart = true;
+
+    [Tooltip("Hide the book again when navigation ends")]
+    [SerializeField]
+    private bool hideBookAfterNavigation = true;
+
     [Tooltip("Tag to use when searching for the GuidanceLine GameObject")]
     [SerializeField]
     private string lineTag = "Line";
@@ -109,6 +118,16 @@ public class LibraryNavigationUIManager : MonoBehaviour
     // Track if we're currently navigating
     private bool isNavigating = false;
     private float lastDestinationCheck = 0f;
+
+    // Track the currently visible book
+    private GameObject currentlyVisibleBook = null;
+
+    // Track which books we've already hidden to avoid redundant operations
+    private System.Collections.Generic.HashSet<GameObject> hiddenBooks = new System.Collections.Generic.HashSet<GameObject>();
+    
+    // Continuously check for new books that need hiding
+    private float lastBookHideCheck = 0f;
+    private const float bookHideCheckInterval = 0.5f; // Check every 0.5 seconds
 
     void Start()
     {
@@ -144,12 +163,25 @@ public class LibraryNavigationUIManager : MonoBehaviour
         // Hide the guidance line at startup
         HideGuidanceLine();
 
+        // Hide all books at startup if enabled
+        if (hideAllBooksAtStart)
+        {
+            HideAllBooks();
+        }
+
         // Initialize UI state
         ShowGreetingPrompt();
     }
 
     void Update()
     {
+        // Continuously check for new books to hide (important for dynamically loaded scenes)
+        if (hideAllBooksAtStart && Time.time - lastBookHideCheck >= bookHideCheckInterval)
+        {
+            lastBookHideCheck = Time.time;
+            CheckAndHideNewBooks();
+        }
+
         // Check if user has reached destination while navigating
         if (isNavigating && bookTargetTransform != null)
         {
@@ -327,6 +359,9 @@ public class LibraryNavigationUIManager : MonoBehaviour
             return;
         }
 
+        // Show the found book (hide others if configured)
+        ShowBook(bookTargetTransform.gameObject);
+
         // Enable the guidance line component if it's disabled
         if (!guidanceLineAuto.enabled)
             guidanceLineAuto.enabled = true;
@@ -384,6 +419,12 @@ public class LibraryNavigationUIManager : MonoBehaviour
     {
         // Stop navigation tracking
         isNavigating = false;
+        
+        // Hide the current book if configured
+        if (hideBookAfterNavigation && currentlyVisibleBook != null)
+        {
+            HideBook(currentlyVisibleBook);
+        }
         
         // Hide the guidance line
         HideGuidanceLine();
@@ -748,6 +789,120 @@ public class LibraryNavigationUIManager : MonoBehaviour
     {
         Debug.Log("[LibraryNavigationUI] TestLeaveButton() called manually");
         OnLeaveClicked();
+    }
+
+    /// <summary>
+    /// Hides all books in the scene at startup.
+    /// Uses tag-based search as primary method since books may be in dynamically loaded scenes.
+    /// </summary>
+    void HideAllBooks()
+    {
+        Log("Hiding all books at startup...");
+        
+        int hiddenCount = 0;
+
+        // Primary method: Find all books by tag (works across all scenes)
+        if (!string.IsNullOrEmpty(bookTag))
+        {
+            try
+            {
+                GameObject[] books = GameObject.FindGameObjectsWithTag(bookTag);
+                foreach (GameObject book in books)
+                {
+                    if (book.activeInHierarchy && !hiddenBooks.Contains(book))
+                    {
+                        book.SetActive(false);
+                        hiddenBooks.Add(book);
+                        hiddenCount++;
+                        Log($"  - Hidden book: '{book.name}' in scene '{book.scene.name}'");
+                    }
+                }
+            }
+            catch (UnityException e)
+            {
+                LogWarning($"Could not find books by tag '{bookTag}': {e.Message}");
+            }
+        }
+
+        Log($"✓ Hidden {hiddenCount} book(s) at startup");
+    }
+
+    /// <summary>
+    /// Continuously checks for newly spawned books and hides them.
+    /// Important for books in dynamically loaded scenes (like Simulated Environment).
+    /// </summary>
+    void CheckAndHideNewBooks()
+    {
+        if (string.IsNullOrEmpty(bookTag))
+            return;
+
+        try
+        {
+            GameObject[] books = GameObject.FindGameObjectsWithTag(bookTag);
+            
+            foreach (GameObject book in books)
+            {
+                // If this is a new book we haven't hidden yet, and it's not the currently visible one
+                if (!hiddenBooks.Contains(book) && book != currentlyVisibleBook)
+                {
+                    if (book.activeInHierarchy)
+                    {
+                        book.SetActive(false);
+                        hiddenBooks.Add(book);
+                        Log($"🔒 Auto-hidden newly loaded book: '{book.name}' in scene '{book.scene.name}'");
+                    }
+                }
+            }
+        }
+        catch (UnityException e)
+        {
+            // Tag might not be defined yet, silently ignore
+        }
+    }
+
+    /// <summary>
+    /// Shows a specific book and hides the previously visible book.
+    /// </summary>
+    void ShowBook(GameObject book)
+    {
+        if (book == null)
+        {
+            LogWarning("Cannot show book: GameObject is null");
+            return;
+        }
+
+        // Hide the previously visible book
+        if (currentlyVisibleBook != null && currentlyVisibleBook != book)
+        {
+            HideBook(currentlyVisibleBook);
+        }
+
+        // Show the new book
+        book.SetActive(true);
+        currentlyVisibleBook = book;
+        
+        // Make sure this book is tracked as one we've processed
+        hiddenBooks.Add(book);
+        
+        Log($"✓ Showing book: '{book.name}'");
+    }
+
+    /// <summary>
+    /// Hides a specific book.
+    /// </summary>
+    void HideBook(GameObject book)
+    {
+        if (book == null)
+            return;
+
+        book.SetActive(false);
+        hiddenBooks.Add(book); // Track that we've hidden this book
+        Log($"✓ Hidden book: '{book.name}'");
+        
+        if (currentlyVisibleBook == book)
+        {
+            currentlyVisibleBook = null;
+        }
     }
 
     /// <summary>
