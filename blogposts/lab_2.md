@@ -39,7 +39,7 @@ We generated a NavMesh from the scan of the XR room, which gave us a test area w
 The automatically generated NavMesh was quite rough and contained several gaps, so instead, we recreated the floor mapping based on it and overlaid the two. By setting these two parts as NavMesh Modifiers, we could easily decide how the NavMesh would “bake” these — and only these — objects, leaving out any other assets. This approach produced a much cleaner and more reliable NavMesh.  
 This worked as expected in the simulated environment, but aligning the NavMesh with the real-world AR scan will present additional challenges, especially since furniture and obstacles may shift slightly compared to the static 3D model.
 
-#### Player Object
+##### Player Object
 
 We have started preparing the **Player Object**, which represents the initial position of the user simulated in the environment. The component used for this is the **NavMesh Agent**, which has the humanoid type and acts as a user in the simulation. Its parameters can be configured so the path maintains specific offsets within the environment.
 
@@ -66,7 +66,8 @@ Additionally, we started preparing the initial interface the user will see upon 
 
 Overall, we performed a solid lab day and definitely achieved more than during the previous one. We all agreed that tasks which took us hours to implement before would now take us much less time. However, there is still a lot to implement, and we can only hope that this tight project timespan will be enough for us to deliver a solid result.
 
-Furthermore, after today’s talk with Kasper, we became aware that the main focus of our project should heavily revolve around the AR features, as they are the most relevant for this course.  
+Furthermore, after today’s talk with Kasper, we became aware that the main focus of our project should heavily revolve around the AR features, as they are the most relevant for this course.
+
 We also gained a deeper understanding of how AR tracking depends on stable anchoring and how NavMesh generation can be optimized for performance.
 
 ## Next Steps

@@ -9,7 +9,7 @@ This is a checklist of requirements gathered throughout the semester.
 
 Text file consitsing links to the repositories must be uploaded to WiseFlow before the **30th of November**.
 
-- [ ] Mobile AR Application
+- [x] Mobile AR Application
   - [ ] Video Demonstration
 - [ ] HMD XR Application
   - [ ] Video Demonstration
@@ -18,14 +18,14 @@ Text file consitsing links to the repositories must be uploaded to WiseFlow befo
   - [x] 1st Week
   - [x] Lab Week 1
   - [x] Lab Week 2
-  - [ ] Lab Week 3
+  - [x] Lab Week 3
   - [ ] Lab Week 4
   - [ ] Lab Week 5
   - [ ] Lab Week 6
 
 ### Skill & Competencies
 
-- [ ] Develop augmented reality applications
+- [x] Develop augmented reality applications
 - [ ] Develop virtual reality applications
 - [ ] Demonstrate an understanding of XR technologies and their use cases
 - [ ] Work with and reflect on the theory behind prominent challenges in the XR industry such as tracking, rendering, locomotion and input
@@ -35,10 +35,10 @@ Text file consitsing links to the repositories must be uploaded to WiseFlow befo
 ### Answered Questions within DevBlogs
 
 - [x] What is AR/VR/AV/MR/XR and how do the terminologies compare?
-- [ ] How does our projects add value to the end user?
-- [ ] How does our applications benifit from XR?
-- [ ] How does markerless tracking work?
-- [ ] What challenges do advancements in AR face at the moment?
+- [x] How does our projects add value to the end user?
+- [x] How does our applications benifit from XR?
+- [x] How does markerless tracking work?
+- [x] What challenges do advancements in AR face at the moment?
 - [ ] How is the Quest workflow different from creating ordinary desktop apps in Unity?
 - [ ] What is the idea behind OpenXR?
 - [ ] Elaborate on 3 DOF and 6 DOF tracking?
