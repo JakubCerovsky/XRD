@@ -1,11 +1,8 @@
 # Library AR Navigator
 
-This AR application helps you find a specific book in a school library. You scan a printed poster with a QR code. That single scan does two things:
+This AR application helps you find a specific book in a school library. The system turns the traditional library experience into a smart, interactive, and user-friendly journey. This is achieved by using the immersive features the XR technologies provide, it not only makes the navigation faster but also enhance engagement and user satisfaction.
 
-1. Localizes the AR session (knows where you are) via image-tracking the poster background.
-2. Picks the target book via the QR payload (e.g., isbn=...).
-
-Then the app renders a path to the correct shelf.
+Below is a diagram explaining the flow of the application for user.
 
 ![Sequence Diagram](./images/sequence_diagram.jpg)
 
@@ -13,11 +10,11 @@ Then the app renders a path to the correct shelf.
 
 **Student**: _“Find this book now”_
 
-- Scan the entrance poster’s QR for a specific ISBN; the app locks position and draws a floor path straight to the correct shelf segment.
+- Scan the entrance poster and input a specific ISBN; the app locks position and draws a floor path straight to the correct shelf segment.
 
 **Librarian**: _“Where do I reshelve this?”_
 
-- Scan the book’s barcode/ISBN, instantly get the shelf ID and a short route back to its exact bay.
+- Scan the book’s barcode/ISBN, instantly get the position and a shortest route back to its exact bay.
 
 ### Video Demonstration
 
@@ -37,11 +34,11 @@ Then the app renders a path to the correct shelf.
 - [Unity 6](https://unity.com/)
   - AR Foundation, ARCore, ARKit XR Plugin, XR Management
 - [3D Scanner App](https://3dscannerapp.com/)
-
-<!-- TODO: Do we have some? -->
+- [Blender](https://www.blender.org/)
 
 ### Code References
 
 The following resources were used during the project development process.
 
-- [title](https://www.example.com)
+- [Unity NavMesh](https://learn.unity.com/tutorial/unity-navmesh#5c7f8528edbc2a002053b498)
+- [Guidance Line](https://assetstore.unity.com/packages/tools/game-toolkits/guidance-line-303873)

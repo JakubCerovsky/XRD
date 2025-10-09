@@ -9,7 +9,7 @@ Using this indoor navigation powered by AR, users (students and librarians) coul
 
 Additionally, a barcode scanner that reads the ISBN directly and/or integration with VIA systems could be added.
 
-**In short**: Our system turns the traditional library experience into a smart, interactive, and user-friendly journey. This is achieved by using the immersive features the XR technologies provide, this not only makes the navigation faster but also enhance engagement and user satisfaction.
+**In short**: Our system turns the traditional library experience into a smart, interactive, and user-friendly journey. This is achieved by using the immersive features the XR technologies provide, it not only makes the navigation faster but also enhance engagement and user satisfaction.
 
 ## Current Progress
 

@@ -79,8 +79,10 @@ We also gained a deeper understanding of how AR tracking depends on stable ancho
 
 ## Resources
 
-- [Unity NavMesh](https://learn.unity.com/tutorial/unity-navmesh)
 - [Blender](https://www.blender.org/)
+- [SLAM](https://community.arm.com/arm-community-blogs/b/mobile-graphics-and-gaming-blog/posts/indoor-real-time-navigation-with-slam-on-your-mobile)
+- [Unity NavMesh](https://learn.unity.com/tutorial/unity-navmesh#5c7f8528edbc2a002053b498)
+- [Guidance Line](https://assetstore.unity.com/packages/tools/game-toolkits/guidance-line-303873)
 
 ---
 

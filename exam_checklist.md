@@ -38,7 +38,7 @@ Text file consitsing links to the repositories must be uploaded to WiseFlow befo
 - [x] How does our projects add value to the end user?
 - [x] How does our applications benifit from XR?
 - [x] How does markerless tracking work?
-- [x] What challenges do advancements in AR face at the moment?
+- [ ] What challenges do advancements in AR face at the moment?
 - [ ] How is the Quest workflow different from creating ordinary desktop apps in Unity?
 - [ ] What is the idea behind OpenXR?
 - [ ] Elaborate on 3 DOF and 6 DOF tracking?
