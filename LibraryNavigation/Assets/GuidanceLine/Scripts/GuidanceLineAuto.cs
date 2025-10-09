@@ -87,7 +87,7 @@ namespace GuidanceLine
                 else
                 {
                     // Fallback: pick the first Camera in the scene
-                    Camera found = GameObject.FindObjectOfType<Camera>();
+                    Camera found = FindFirstObjectByType<Camera>();
                     if (found != null)
                     {
                         startPoint = found.transform;
