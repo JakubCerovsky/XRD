@@ -11,16 +11,17 @@ public class ImageCubeSpawner : MonoBehaviour
     // Keep one cube per reference image name
     Dictionary<string, GameObject> spawned = new Dictionary<string, GameObject>();
 
-    void OnEnable()  => trackedImageManager.trackedImagesChanged += OnChanged;
-    void OnDisable() => trackedImageManager.trackedImagesChanged -= OnChanged;
+    void OnEnable()  => trackedImageManager.trackablesChanged.AddListener(OnChanged);
+    void OnDisable() => trackedImageManager.trackablesChanged.RemoveListener(OnChanged);
 
-    void OnChanged(ARTrackedImagesChangedEventArgs args)
+    void OnChanged(ARTrackablesChangedEventArgs<ARTrackedImage> args)
     {
         foreach (var img in args.added)   UpdateFor(img);
         foreach (var img in args.updated) UpdateFor(img);
 
-        foreach (var img in args.removed)
+        foreach (var kvp in args.removed)
         {
+            var img = kvp.Value;
             var key = img.referenceImage.name;
             if (spawned.TryGetValue(key, out var go))
             {
