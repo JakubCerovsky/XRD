@@ -10,13 +10,17 @@ using UnityEngine.UI;
 public class ISBNInputValidator : MonoBehaviour
 {
     [Header("Visual Feedback Colors")]
-    [Tooltip("Color when ISBN is valid")]
+    [Tooltip("Color when ISBN is valid and found in database")]
     [SerializeField]
     private Color validColor = Color.white;
 
-    [Tooltip("Color when ISBN is invalid")]
+    [Tooltip("Color when ISBN format is invalid")]
     [SerializeField]
     private Color invalidColor = new Color(1f, 0.6f, 0.6f); // Light red
+
+    [Tooltip("Color when ISBN is valid but not found in database")]
+    [SerializeField]
+    private Color notFoundColor = new Color(1f, 1f, 0.6f); // Light yellow
 
     [Header("Validation Settings")]
     [Tooltip("Show validation while typing (true) or only on submit (false)")]
@@ -27,11 +31,30 @@ public class ISBNInputValidator : MonoBehaviour
     [SerializeField]
     private bool allowEmpty = true;
 
+    [Tooltip("Check if book exists in database (not just format validation)")]
+    [SerializeField]
+    private bool checkBookDatabase = true;
+
+    [Header("References")]
+    [Tooltip("Reference to the BookDatabase component")]
+    [SerializeField]
+    private BookDatabase bookDatabase;
+
     private TMP_InputField inputField;
     private Image backgroundImage;
     private bool isValid = true;
 
+    public enum ValidationState
+    {
+        Valid,          // ISBN is valid and found in database
+        InvalidFormat,  // ISBN format is invalid
+        NotFoundInDB    // ISBN format is valid but not in database
+    }
+
+    private ValidationState currentState = ValidationState.Valid;
+
     public bool IsValid => isValid;
+    public ValidationState CurrentState => currentState;
 
     void Awake()
     {
@@ -54,6 +77,21 @@ public class ISBNInputValidator : MonoBehaviour
             return;
         }
 
+        // Try to find BookDatabase if not assigned
+        if (checkBookDatabase && bookDatabase == null)
+        {
+            bookDatabase = FindObjectOfType<BookDatabase>();
+            if (bookDatabase == null)
+            {
+                Debug.LogWarning("[ISBNInputValidator] BookDatabase not found in scene. Database check will be disabled.");
+                checkBookDatabase = false;
+            }
+            else
+            {
+                Debug.Log("[ISBNInputValidator] BookDatabase found automatically.");
+            }
+        }
+
         // Subscribe to input field events
         if (validateOnChange)
         {
@@ -63,7 +101,7 @@ public class ISBNInputValidator : MonoBehaviour
         inputField.onEndEdit.AddListener(OnInputEndEdit);
 
         // Set initial color
-        UpdateVisualFeedback(true);
+        UpdateVisualFeedback(ValidationState.Valid);
     }
 
     void OnDestroy()
@@ -100,34 +138,72 @@ public class ISBNInputValidator : MonoBehaviour
         if (string.IsNullOrWhiteSpace(value))
         {
             isValid = allowEmpty;
-            UpdateVisualFeedback(isValid);
+            currentState = allowEmpty ? ValidationState.Valid : ValidationState.InvalidFormat;
+            UpdateVisualFeedback(currentState);
             return;
         }
 
-        // Use the ISBNFormatChecker to validate
-        isValid = ISBNFormatChecker.IsValidIsbn(value);
+        // First, check if the format is valid
+        bool formatValid = ISBNFormatChecker.IsValidIsbn(value);
 
-        UpdateVisualFeedback(isValid);
-
-        // Log for debugging
-        if (!isValid)
+        if (!formatValid)
         {
-            Debug.Log($"[ISBNInputValidator] Invalid ISBN: '{value}'");
+            isValid = false;
+            currentState = ValidationState.InvalidFormat;
+            UpdateVisualFeedback(currentState);
+            Debug.Log($"[ISBNInputValidator] Invalid ISBN format: '{value}'");
+            return;
+        }
+
+        // If format is valid and database check is enabled, check if book exists in database
+        if (checkBookDatabase && bookDatabase != null)
+        {
+            GameObject bookObject = bookDatabase.FindBookByISBN(value);
+            
+            if (bookObject != null)
+            {
+                isValid = true;
+                currentState = ValidationState.Valid;
+                Debug.Log($"[ISBNInputValidator] Valid ISBN and book found in database: '{value}' -> {bookObject.name}");
+            }
+            else
+            {
+                isValid = false;
+                currentState = ValidationState.NotFoundInDB;
+                Debug.Log($"[ISBNInputValidator] Valid ISBN format but book not found in database: '{value}'");
+            }
+
+            UpdateVisualFeedback(currentState);
         }
         else
         {
-            Debug.Log($"[ISBNInputValidator] Valid ISBN: '{value}'");
+            // Only format validation - consider it valid if format is correct
+            isValid = formatValid;
+            currentState = ValidationState.Valid;
+            UpdateVisualFeedback(currentState);
+            Debug.Log($"[ISBNInputValidator] Valid ISBN format: '{value}'");
         }
     }
 
     /// <summary>
     /// Updates the visual feedback based on validation state
     /// </summary>
-    private void UpdateVisualFeedback(bool valid)
+    private void UpdateVisualFeedback(ValidationState state)
     {
         if (backgroundImage != null)
         {
-            backgroundImage.color = valid ? validColor : invalidColor;
+            switch (state)
+            {
+                case ValidationState.Valid:
+                    backgroundImage.color = validColor;
+                    break;
+                case ValidationState.InvalidFormat:
+                    backgroundImage.color = invalidColor;
+                    break;
+                case ValidationState.NotFoundInDB:
+                    backgroundImage.color = notFoundColor;
+                    break;
+            }
         }
     }
 
@@ -149,6 +225,34 @@ public class ISBNInputValidator : MonoBehaviour
         {
             return allowEmpty;
         }
-        return ISBNFormatChecker.IsValidIsbn(inputField.text);
+
+        bool formatValid = ISBNFormatChecker.IsValidIsbn(inputField.text);
+
+        if (!formatValid)
+        {
+            return false;
+        }
+
+        // If database check is enabled, also verify book exists
+        if (checkBookDatabase && bookDatabase != null)
+        {
+            GameObject bookObject = bookDatabase.FindBookByISBN(inputField.text);
+            return bookObject != null;
+        }
+
+        return formatValid;
+    }
+
+    /// <summary>
+    /// Gets the book GameObject for the current ISBN input if it exists in the database
+    /// </summary>
+    public GameObject GetBookForCurrentISBN()
+    {
+        if (bookDatabase == null || string.IsNullOrWhiteSpace(inputField.text))
+        {
+            return null;
+        }
+
+        return bookDatabase.FindBookByISBN(inputField.text);
     }
 }
