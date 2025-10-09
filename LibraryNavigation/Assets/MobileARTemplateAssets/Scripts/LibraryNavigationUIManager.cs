@@ -17,11 +17,15 @@ public class LibraryNavigationUIManager : MonoBehaviour
 
     [Tooltip("The scan button panel shown after greeting is dismissed")]
     [SerializeField]
-    private GameObject scanButton;
+    private GameObject searchPanel;
 
     [Tooltip("The book search panel with ISBN input")]
     [SerializeField]
     private GameObject bookSearchPanel;
+
+    [Tooltip("The leave button panel shown during navigation")]
+    [SerializeField]
+    private GameObject leaveButtonPanel;
 
     [Header("Buttons")]
     [Tooltip("Continue button on the greeting prompt")]
@@ -36,6 +40,10 @@ public class LibraryNavigationUIManager : MonoBehaviour
     [SerializeField]
     private Button bookSearchButton;
 
+    [Tooltip("Leave button shown during navigation to stop and return to scan button")]
+    [SerializeField]
+    private Button leaveButton;
+
     [Header("Input")]
     [Tooltip("ISBN input field in the book search panel")]
     [SerializeField]
@@ -46,9 +54,22 @@ public class LibraryNavigationUIManager : MonoBehaviour
     [SerializeField]
     private GuidanceLineAuto guidanceLineAuto;
 
+    [Tooltip("Reference to the BookDatabase component (optional - will auto-find if not assigned)")]
+    [SerializeField]
+    private BookDatabase bookDatabase;
+
     [Tooltip("The book/target GameObject to navigate to (optional - will auto-find based on ISBN)")]
     [SerializeField]
     private Transform bookTargetTransform;
+
+    [Header("Destination Detection")]
+    [Tooltip("Distance in meters to consider destination reached")]
+    [SerializeField]
+    private float destinationReachedDistance = 1.5f;
+
+    [Tooltip("Check for destination reached every X seconds")]
+    [SerializeField]
+    private float destinationCheckInterval = 0.5f;
 
     [Header("Book Lookup Settings")]
     [Tooltip("Parent GameObject containing all book destinations (optional - searches entire scene if not set)")]
@@ -73,14 +94,21 @@ public class LibraryNavigationUIManager : MonoBehaviour
         Greeting,
         ScanButton,
         BookSearch,
-        Navigating
+        Navigating,
+        NavigatingWithLeaveButton
     }
 
-    // Removed unused field warning - keeping for future use if needed
-    // private UIState currentState = UIState.Greeting;
+    // Track current UI state (currently for future use)
+    #pragma warning disable 0414
+    private UIState currentState = UIState.Greeting;
+    #pragma warning restore 0414
 
     // Cache the LineRenderer once found to avoid repeated searches
     private LineRenderer cachedLineRenderer;
+
+    // Track if we're currently navigating
+    private bool isNavigating = false;
+    private float lastDestinationCheck = 0f;
 
     void Start()
     {
@@ -100,11 +128,38 @@ public class LibraryNavigationUIManager : MonoBehaviour
         else
             LogWarning("Book Search Button is not assigned!");
 
+        if (leaveButton != null)
+        {
+            leaveButton.onClick.AddListener(OnLeaveClicked);
+            Log($"✓ Leave Button registered: '{leaveButton.gameObject.name}'");
+        }
+        else
+            LogWarning("Leave Button is not assigned in Inspector!");
+
+        if (leaveButtonPanel != null)
+            Log($"✓ Leave Button Panel found: '{leaveButtonPanel.name}'");
+        else
+            LogWarning("Leave Button Panel is not assigned in Inspector!");
+
         // Hide the guidance line at startup
         HideGuidanceLine();
 
         // Initialize UI state
         ShowGreetingPrompt();
+    }
+
+    void Update()
+    {
+        // Check if user has reached destination while navigating
+        if (isNavigating && bookTargetTransform != null)
+        {
+            // Only check periodically to save performance
+            if (Time.time - lastDestinationCheck >= destinationCheckInterval)
+            {
+                lastDestinationCheck = Time.time;
+                CheckDestinationReached();
+            }
+        }
     }
 
     void OnDestroy()
@@ -116,6 +171,8 @@ public class LibraryNavigationUIManager : MonoBehaviour
             searchButton.onClick.RemoveListener(OnSearchButtonClicked);
         if (bookSearchButton != null)
             bookSearchButton.onClick.RemoveListener(OnBookSearchClicked);
+        if (leaveButton != null)
+            leaveButton.onClick.RemoveListener(OnLeaveClicked);
     }
 
     /// <summary>
@@ -124,8 +181,10 @@ public class LibraryNavigationUIManager : MonoBehaviour
     void ShowGreetingPrompt()
     {
         SetPanelActive(greetingPrompt, true);
-        SetPanelActive(scanButton, false);
+        SetPanelActive(searchPanel, false);
         SetPanelActive(bookSearchPanel, false);
+        SetPanelActive(leaveButtonPanel, false);
+        currentState = UIState.Greeting;
         Log("Showing Greeting Prompt");
     }
 
@@ -144,8 +203,10 @@ public class LibraryNavigationUIManager : MonoBehaviour
     void ShowScanButton()
     {
         SetPanelActive(greetingPrompt, false);
-        SetPanelActive(scanButton, true);
+        SetPanelActive(searchPanel, true);
         SetPanelActive(bookSearchPanel, false);
+        SetPanelActive(leaveButtonPanel, false);
+        currentState = UIState.ScanButton;
         Log("Showing Scan Button");
     }
 
@@ -164,13 +225,15 @@ public class LibraryNavigationUIManager : MonoBehaviour
     void ShowBookSearchPanel()
     {
         SetPanelActive(greetingPrompt, false);
-        SetPanelActive(scanButton, false);
+        SetPanelActive(searchPanel, false);
         SetPanelActive(bookSearchPanel, true);
+        SetPanelActive(leaveButtonPanel, false);
         
         // Clear previous ISBN input
         if (isbnInputField != null)
             isbnInputField.text = "";
         
+        currentState = UIState.BookSearch;
         Log("Showing Book Search Panel");
     }
 
@@ -202,7 +265,7 @@ public class LibraryNavigationUIManager : MonoBehaviour
     {
         // Hide all UI panels
         SetPanelActive(greetingPrompt, false);
-        SetPanelActive(scanButton, false);
+        SetPanelActive(searchPanel, false);
         SetPanelActive(bookSearchPanel, false);
 
         // Auto-find GuidanceLineAuto if not assigned
@@ -222,16 +285,45 @@ public class LibraryNavigationUIManager : MonoBehaviour
             }
         }
 
-        // Auto-find book target if not assigned
-        if (bookTargetTransform == null)
+        // Auto-find BookDatabase if not assigned
+        if (bookDatabase == null)
         {
-            Log($"Book Target not assigned, searching for book with ISBN: {isbn}...");
+            Log("BookDatabase not assigned, searching in scene...");
+            bookDatabase = FindFirstObjectByType<BookDatabase>();
+            
+            if (bookDatabase != null)
+            {
+                Log($"Found BookDatabase on GameObject: {bookDatabase.gameObject.name}");
+            }
+            else
+            {
+                LogWarning("BookDatabase not found! Falling back to manual scene search...");
+            }
+        }
+
+        // Try to find book using BookDatabase first
+        GameObject bookObject = null;
+        if (bookDatabase != null)
+        {
+            bookObject = bookDatabase.FindBookByISBN(isbn);
+        }
+
+        // Fallback to manual search if database didn't find it
+        if (bookObject == null && bookTargetTransform == null)
+        {
+            Log($"Book not found in database, searching scene manually for ISBN: {isbn}...");
             bookTargetTransform = FindBookByISBN(isbn);
+        }
+        else if (bookObject != null)
+        {
+            bookTargetTransform = bookObject.transform;
         }
 
         if (bookTargetTransform == null)
         {
-            LogError($"Book with ISBN '{isbn}' not found! Make sure a GameObject named '{isbn}' or tagged '{bookTag}' exists in the scene.");
+            LogError($"Book with ISBN '{isbn}' not found! Make sure:");
+            LogError($"  1. The book is registered in the BookDatabase, OR");
+            LogError($"  2. A GameObject named '{isbn}' or tagged '{bookTag}' exists in the scene.");
             return;
         }
 
@@ -245,9 +337,93 @@ public class LibraryNavigationUIManager : MonoBehaviour
         // Now show the guidance line
         ShowGuidanceLine();
         
+        // Show the Leave button so user can stop navigation
+        ShowLeaveButton();
+        
+        // Start tracking navigation
+        isNavigating = true;
+        lastDestinationCheck = Time.time;
+        
         Log($"✓ Book location found! Navigation started to '{bookTargetTransform.name}'");
         Log($"Path: Main Camera → {bookTargetTransform.name} (ISBN: {isbn})");
         Log("GuidanceLine is now visible showing the path to the book!");
+    }
+
+    /// <summary>
+    /// Shows the Leave button during navigation.
+    /// </summary>
+    void ShowLeaveButton()
+    {
+        SetPanelActive(greetingPrompt, false);
+        SetPanelActive(searchPanel, false);
+        SetPanelActive(bookSearchPanel, false);
+        SetPanelActive(leaveButtonPanel, true);
+        currentState = UIState.NavigatingWithLeaveButton;
+        Log("Showing Leave Button - User can now stop navigation");
+    }
+
+    /// <summary>
+    /// Called when the Leave button is clicked.
+    /// Stops navigation and returns to the scan button.
+    /// </summary>
+    void OnLeaveClicked()
+    {
+        Debug.Log("[LibraryNavigationUI] ========== LEAVE BUTTON CLICKED ==========");
+        Log("Leave button clicked - Stopping navigation");
+        
+        StopNavigation();
+        
+        Log("✓ Navigation stopped. Ready to search for another book.");
+    }
+
+    /// <summary>
+    /// Stops navigation and returns to scan button state.
+    /// Can be called manually or when destination is reached.
+    /// </summary>
+    void StopNavigation()
+    {
+        // Stop navigation tracking
+        isNavigating = false;
+        
+        // Hide the guidance line
+        HideGuidanceLine();
+        
+        // Disable the guidance line component
+        if (guidanceLineAuto != null)
+            guidanceLineAuto.enabled = false;
+        
+        // Clear the book target for next search
+        bookTargetTransform = null;
+        
+        // Return to scan button state
+        ShowScanButton();
+    }
+
+    /// <summary>
+    /// Checks if the user has reached the destination.
+    /// If so, automatically stops navigation and shows scan button.
+    /// </summary>
+    void CheckDestinationReached()
+    {
+        // Get the camera position (user's position)
+        Camera mainCamera = Camera.main;
+        if (mainCamera == null || bookTargetTransform == null)
+            return;
+
+        // Calculate distance to destination
+        float distance = Vector3.Distance(mainCamera.transform.position, bookTargetTransform.position);
+        
+        // Check if destination reached
+        if (distance <= destinationReachedDistance)
+        {
+            Log($"✓ Destination reached! Distance: {distance:F2}m (threshold: {destinationReachedDistance}m)");
+            Log($"You have arrived at '{bookTargetTransform.name}'!");
+            
+            // Stop navigation and show scan button for next search
+            StopNavigation();
+            
+            Log("Ready to search for another book.");
+        }
     }
 
     /// <summary>
@@ -556,11 +732,22 @@ public class LibraryNavigationUIManager : MonoBehaviour
     /// </summary>
     public void ResetUI()
     {
-        ShowGreetingPrompt();
         HideGuidanceLine();
         if (guidanceLineAuto != null)
             guidanceLineAuto.enabled = false;
+        bookTargetTransform = null;
+        ShowGreetingPrompt();
         Log("UI Reset to Greeting Prompt");
+    }
+
+    /// <summary>
+    /// Public method to test Leave button functionality from Inspector.
+    /// Can be called manually or from UI event system.
+    /// </summary>
+    public void TestLeaveButton()
+    {
+        Debug.Log("[LibraryNavigationUI] TestLeaveButton() called manually");
+        OnLeaveClicked();
     }
 
     /// <summary>
