@@ -854,7 +854,7 @@ public class LibraryNavigationUIManager : MonoBehaviour
                 }
             }
         }
-        catch (UnityException e)
+        catch (UnityException)
         {
             // Tag might not be defined yet, silently ignore
         }
