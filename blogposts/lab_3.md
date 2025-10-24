@@ -38,6 +38,19 @@ Final UI components were implemented with the following features:
   - This feature is using the ISBN Format Checker mentioned above
 - Option to "Exit" the navigation process
 
+#### Setback
+
+At the end of the Lab 3, we have found out that some of the last three pull-requests broke our AR experience on mobile device. While everything was working smoothly in the XR Simulation, we have forgot to test the latest changes on our phones. The issue was that the camera on the phone did not work as expected after opening built application.
+
+After spending quite a lot of time debugging and comparing commits, we were unable to find the root of a problem. At the end, We decided to revert to latest working commit, and implement the missing features again.
+
+This included:
+
+- [Search Book by ISBN Number](#search-book-by-isbn-number)
+- [UI Changes](#ui)
+
+Knowing what to do, these changes were failry simple, but still took us time, since we were testing the build on phone after each small step. This setback was rather unfortunate, and dealt a solid damage to out progress. However, we have learned the importance of testing each step, and not to trust XR Simulation.
+
 #### Video Demonstration
 
 We have prepared a video scenario, and recorded the demonstration in the school library with one of the books faked in the system.
