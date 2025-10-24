@@ -30,6 +30,7 @@ public class SimpleLibraryUIController : MonoBehaviour
     [SerializeField] private Button greetingContinueButton;
     [SerializeField] private Button startButton;
     [SerializeField] private TMP_InputField isbnInputField;
+    [SerializeField] private ISBNInputValidator isbnValidator;
     [SerializeField] private Button searchBookButton;
     [SerializeField] private Button leaveButton;
 
@@ -372,8 +373,9 @@ public class SimpleLibraryUIController : MonoBehaviour
         SetPanelActive(startButtonPanel, false);
         SetPanelActive(searchBookPrompt, true);
 
-        // clear previous input
+        // clear previous input and reset validation state
         if (isbnInputField != null) isbnInputField.text = string.Empty;
+        if (isbnValidator != null) isbnValidator.ValidateCurrent();
     }
 
     void OnSearchBookClicked()
@@ -381,15 +383,50 @@ public class SimpleLibraryUIController : MonoBehaviour
         string isbn = isbnInputField != null ? isbnInputField.text.Trim() : string.Empty;
         if (string.IsNullOrEmpty(isbn))
         {
-            Debug.LogWarning("ISBN is empty");
+            Debug.LogWarning("[SimpleLibraryUI] ISBN is empty");
             return;
         }
 
+        // Check if validator is attached and validate the ISBN
         GameObject bookObj = null;
-        if (bookDatabase != null)
-            bookObj = bookDatabase.FindBookByISBN(isbn);
+        if (isbnValidator != null)
+        {
+            // Validate and check current state
+            if (!isbnValidator.ValidateCurrent())
+            {
+                // Show helpful message based on validation state
+                switch (isbnValidator.CurrentState)
+                {
+                    case ISBNInputValidator.ValidationState.InvalidFormat:
+                        Debug.LogWarning($"[SimpleLibraryUI] Invalid ISBN format: '{isbn}'. Please enter a valid 10 or 13 digit ISBN.");
+                        // Visual feedback already shown by validator (red background)
+                        return;
+                    case ISBNInputValidator.ValidationState.NotFoundInDB:
+                        Debug.LogWarning($"[SimpleLibraryUI] ISBN '{isbn}' is valid but book not found in database.");
+                        // Visual feedback already shown by validator (yellow background)
+                        return;
+                }
+                return;
+            }
 
-        // Fallback: try to find object by name/tag in scene
+            // If validation passed, try to get the book from validator (it already looked it up)
+            bookObj = isbnValidator.GetBookForCurrentISBN();
+        }
+        else
+        {
+            // Fallback validation if validator not attached
+            if (!ISBNFormatChecker.IsValidIsbn(isbn))
+            {
+                Debug.LogWarning($"[SimpleLibraryUI] Invalid ISBN format: '{isbn}'. Please enter a valid 10 or 13 digit ISBN.");
+                return;
+            }
+
+            // Try to find book through database
+            if (bookDatabase != null)
+                bookObj = bookDatabase.FindBookByISBN(isbn);
+        }
+
+        // Additional fallback: try to find object by name/tag in scene
         if (bookObj == null)
         {
             // Try tag
@@ -420,7 +457,7 @@ public class SimpleLibraryUIController : MonoBehaviour
 
         if (bookObj == null)
         {
-            Debug.LogWarning($"Book with ISBN '{isbn}' not found");
+            Debug.LogWarning($"[SimpleLibraryUI] Book with ISBN '{isbn}' not found");
             return;
         }
 
@@ -448,10 +485,10 @@ public class SimpleLibraryUIController : MonoBehaviour
             guidanceLineAuto.enabled = true;
         }
 
-    // Make only the target book visible
-    ShowOnlyBook(bookObj);
+        // Make only the target book visible
+        ShowOnlyBook(bookObj);
 
-    SetPanelActive(searchBookPrompt, false);
+        SetPanelActive(searchBookPrompt, false);
         SetPanelActive(leaveButtonPanel, true);
 
         isNavigating = true;
