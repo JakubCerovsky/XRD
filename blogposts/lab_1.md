@@ -5,7 +5,11 @@
 For our first project, we decided to make a mobile AR application for VIA's library. <br>
 Since libraries often have hundreds, if not thousands, of books, it can often be confusing to find the book that you are interested in. <br>
 Our idea to solve this issue is to make a "find your book" system that allows you to first calibrate the environment by scanning an object or a picture, and search for a book either by ISBN or name. <br>
-This could also be useful for the librarian if they want to know where to place a certain book. A barcode scanner that reads the isbn directly and/or integration with VIA systems could be added.
+Using this indoor navigation powered by AR, users (students and librarians) could simply search for a book in the app and then follow a virtual path displayed through their phone or AR glasses. This reduces the time spent searching and increases accessibility, especially in this day and age when people often do not have any experience with physical libraries.
+
+Additionally, a barcode scanner that reads the ISBN directly and/or integration with VIA systems could be added.
+
+**In short**: Our system turns the traditional library experience into a smart, interactive, and user-friendly journey. This is achieved by using the immersive features the XR technologies provide, it not only makes the navigation faster but also enhance engagement and user satisfaction.
 
 ## Current Progress
 
