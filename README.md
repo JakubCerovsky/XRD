@@ -18,9 +18,7 @@ Below is a diagram explaining the flow of the application for user.
 
 ### Video Demonstration
 
-<!-- TODO: Input link -->
-
-[Library AR Navigator Demo]()
+[AR Library Navigation Demo](https://youtu.be/h0o3pto08v4)
 
 ### Contributors:
 
@@ -32,7 +30,6 @@ Below is a diagram explaining the flow of the application for user.
 ### Tools Used
 
 - [Unity 6](https://unity.com/)
-  - AR Foundation, ARCore, ARKit XR Plugin, XR Management
 - [3D Scanner App](https://3dscannerapp.com/)
 - [Blender](https://www.blender.org/)
 

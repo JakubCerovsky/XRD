@@ -10,7 +10,7 @@ This is a checklist of requirements gathered throughout the semester.
 Text file consitsing links to the repositories must be uploaded to WiseFlow before the **30th of November**.
 
 - [x] Mobile AR Application
-  - [ ] Video Demonstration
+  - [x] Video Demonstration
 - [ ] HMD XR Application
   - [ ] Video Demonstration
 - [ ] DevBlog

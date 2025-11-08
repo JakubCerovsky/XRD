@@ -4,9 +4,9 @@ During the last AR Lab Day, we started putting our individual scenes and assets 
 
 ---
 
-### Progress
+## Progress
 
-#### NavMesh + Guidance Line
+### NavMesh + Guidance Line
 
 Our results of the second lab day were that we had a NavMesh Surface (walkable surface) of the library scan, and we had a GuidanceLineAuto asset working with a sample scene intergrated with NavMesh. Our first step was to use this guidance line with our custom setup for the library.
 
@@ -14,7 +14,7 @@ This was a pretty straight forward task, and in fact, in immediately worked in t
 
 As a last step, we made the scanned environment transparent, so it does not affect the user interaction with the real-world view. Keeping the environment in helps with **occlusion** as the navigation line is not displayed behind the shelfs.
 
-#### Search Book by ISBN Number
+### Search Book by ISBN Number
 
 Our main improvement for this Lab Day was improving the `GuidanceLineAuto` script and introducing the `BookDatabase` script. There are several steps it does during the runtime:
 
@@ -25,11 +25,11 @@ Our main improvement for this Lab Day was improving the `GuidanceLineAuto` scrip
 4. `GuidanceLineAuto` script automatically generates a line, which traces a path between the start point and the end point.
 5. _Optional: User can leave the navigation._
 
-#### ISBN Format Checker
+### ISBN Format Checker
 
 Checks the fortmat of the inputed ISBN value whether it is one of the valid patterns based on the [ISBN documentation](https://www.isbn.org/faqs_general_questions).
 
-#### UI
+### UI
 
 Final UI components were implemented with the following features:
 
@@ -38,7 +38,7 @@ Final UI components were implemented with the following features:
   - This feature is using the ISBN Format Checker mentioned above
 - Option to "Exit" the navigation process
 
-#### Setback
+### Setback
 
 At the end of the Lab 3, we have found out that some of the last three pull-requests broke our AR experience on mobile device. While everything was working smoothly in the XR Simulation, we have forgot to test the latest changes on our phones. The issue was that the camera on the phone did not work as expected after opening built application.
 
@@ -51,11 +51,11 @@ This included:
 
 Knowing what to do, these changes were failry simple, but still took us time, since we were testing the build on phone after each small step. This setback was rather unfortunate, and dealt a solid damage to out progress. However, we have learned the importance of testing each step, and not to trust XR Simulation.
 
-#### Video Demonstration
+### Video Demonstration
 
 We have prepared a video scenario, and recorded the demonstration in the school library with one of the books faked in the system.
 
-The editing and upload of the video will take place in the upcoming weeks and the link will be both here, and in the projects [README](../README.md/#video-demonstration) file.
+The video can be found here: [AR Library Navigation Demo](https://youtu.be/h0o3pto08v4)
 
 ---
 
