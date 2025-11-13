@@ -6,8 +6,11 @@ During Lab Day 4, we shifted our focus to planning and dividing tasks for our ne
 
 Before starting, we discussed the concept and drew a diagram to visualize the experience, how puzzles will connect, and what interactions each player will have. Based on this discussion, we divided responsibilities to ensure everyone could make steady progress in parallel.
 
-> **Project Structure Diagram:** overview of puzzle flow, environment layout, and assigned responsibilities.  
-![Project Structure Diagram](./VR_Bomb_Puzzle_Flow.png)
+> **Project Structure Diagram:** overview of puzzle flow.  
+<p align="start">
+  <img src="./VR_Bomb_Puzzle_Flow.png" alt="Project Structure Diagram" width="600"/>
+</p>
+
 
 ## Progress
 
