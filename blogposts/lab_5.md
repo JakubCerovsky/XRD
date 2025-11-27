@@ -42,6 +42,7 @@ This script expects an array of the Socket Scripts, and when invoked, checks thr
 _Written by: Jakub_
 
 ---
+
 ## Cardboard Box
 
 ### Opening the box
@@ -54,6 +55,7 @@ A script on the tape starts the bomb levitation and makes the cardboard box disa
 _Written by: Cosmin_
 
 ---
+
 ## Electrical Box
 
 ### Electric drill
@@ -67,6 +69,17 @@ _Written by: Alex_
 ---
 
 ## Reflections
+
+This week, we had 2 issues that slowed us down significantly: lack of unity experience and low-end hardware.
+For most of the day, we focused on watching guides, understanding the template we are using and slowly using it to implement things for our parts of the project.
+At this point, we realised that there were also significant differences between the way unity ran on our PCs. Running it was laggy on Marcus's laptop and building it took a really long time on Jakub's laptop (>30 min). For the next lab, testing and building will be done mostly on the other laptops.
+Overall, this week was more about learning and finding ways to work with what we have.
+
+---
+
+_Written by: Cosmin_
+
+---
 
 ## Resources
 
