@@ -58,9 +58,15 @@ _Written by: Cosmin_
 
 ## Electrical Box
 
-### Electric drill
+The electrical box has screws, a lid, and the wires inside. Each screw keeps track of whether the drill tip is touching it and moves outward as the drill turns; when all screws are removed the lid detects that and becomes free to come off. The wires inside are monitored by a simple manager that listens for cuts — if the player snips the correct wire the puzzle is solved, otherwise the bomb triggers the failure behavior. In short: the drill and screws interact to free the lid, and the wires monitor decides whether the player cut the right wire.
+
+### Electric screwdriver
+
+The electric screwdriver is the player’s powered tool for removing screws. The drill objects include the visual spinning tip and the tip collider. When the spinning tip touches a screw, the tip reports rotation to the screw so the screw can advance out of its hole. A small bridge on the tip forwards collisions to the drill logic so contact is reliable. The drill also exposes an activation state (trigger pressed) so the tool only “unscrews” while the player is actively using it. Together, these parts let the player aim the drill at a screw, press the trigger, and watch the screw slowly back out.
 
 ### Pliers
+
+The pliers are used for cutting wires. When the player closes the pliers and both sides contact a wire, the pliers perform the cut and the wire swaps to its “cut” visual. The pliers also expose simple grab and activate hooks so they work naturally with the XR interaction controls. Put simply, the pliers let the player close both jaws on a wire and cut it reliably, and that cut is reported back to the electrical box logic.
 
 ---
 
