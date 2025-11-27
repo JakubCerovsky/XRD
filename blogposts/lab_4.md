@@ -6,11 +6,11 @@ During Lab Day 4, we shifted our focus to planning and dividing tasks for our ne
 
 Before starting, we discussed the concept and drew a diagram to visualize the experience, how puzzles will connect, and what interactions each player will have. Based on this discussion, we divided responsibilities to ensure everyone could make steady progress in parallel.
 
-> **Project Structure Diagram:** overview of puzzle flow.  
-<p align="start">
-  <img src="./VR_Bomb_Puzzle_Flow.png" alt="Project Structure Diagram" width="600"/>
-</p>
+> **Project Structure Diagram:** overview of puzzle flow.
 
+<p align="start">
+  <img src="../images/vr_sequence_diagram.png" alt="Project Structure Diagram" width="600"/>
+</p>
 
 ## Progress
 
@@ -20,7 +20,7 @@ After reviewing the diagram and discussing possible mechanics, we split our task
 
 **Marcus:** Keypad puzzle; implemented the interaction logic, made the scripting of the keypad input system, and created a working keypad prefab that works with ray interaction.
 
-**Jakub:** Shapes puzzle (It goes in the square hole); used ProBuilder to design and implement the shape-fitting puzzle, focusing on object interaction with XR Grab Interactable, colliders, and physics components.
+**Jakub:** Shapes puzzle; used ProBuilder to design and implement the shape-fitting puzzle, focusing on object interaction with XR Grab Interactable, colliders, and physics components.
 
 **Cosmin:** Environment setup — created the base VR environment, added teleportation points, imported and placed the bomb model, and ensured the scene was connected properly to the headset for testing.
 
@@ -73,7 +73,7 @@ The **teleportation system** itself was imported from the **Unity VR Template**,
 
 Also, Cosmin started creating the bomb model in Blender, which will be a floating box flying out of the cardboard box.
 
-### Tool system puzzle 
+### Tool system puzzle
 
 For the workplace tools, **Alex** was responsible for finding, importing, and setting up the necessary 3D models.  
 A collection of realistic **tool assets** — including screwdrivers, pliers, and other hand tools — was added to the project to enhance the immersion of the bomb defusal environment.

@@ -19,16 +19,16 @@ Text file consitsing links to the repositories must be uploaded to WiseFlow befo
   - [x] Lab Week 1
   - [x] Lab Week 2
   - [x] Lab Week 3
-  - [ ] Lab Week 4
+  - [x] Lab Week 4
   - [ ] Lab Week 5
   - [ ] Lab Week 6
 
 ### Skill & Competencies
 
 - [x] Develop augmented reality applications
-- [ ] Develop virtual reality applications
-- [ ] Demonstrate an understanding of XR technologies and their use cases
-- [ ] Work with and reflect on the theory behind prominent challenges in the XR industry such as tracking, rendering, locomotion and input
+- [x] Develop virtual reality applications
+- [x] Demonstrate an understanding of XR technologies and their use cases
+- [x] Work with and reflect on the theory behind prominent challenges in the XR industry such as tracking, rendering, locomotion and input
 - [ ] Understand and reflect on underlying sensor and display technologies for XR hardware
 - [ ] Concieve apps and ideas that utilize the advantages of XR
 
@@ -38,13 +38,13 @@ Text file consitsing links to the repositories must be uploaded to WiseFlow befo
 - [x] How does our projects add value to the end user?
 - [x] How does our applications benifit from XR?
 - [x] How does markerless tracking work?
-- [ ] What challenges do advancements in AR face at the moment?
+- [x] What challenges do advancements in AR face at the moment?
 - [ ] How is the Quest workflow different from creating ordinary desktop apps in Unity?
-- [ ] What is the idea behind OpenXR?
+- [x] What is the idea behind OpenXR?
 - [ ] Elaborate on 3 DOF and 6 DOF tracking?
 - [ ] What technical improvements will we see to VR rendering and display technologies in the future?
 - [ ] What are important factors to immersion?
-- [ ] How have we used HRTFs?
+- [x] How have we used HRTFs?
 - [ ] How are our apps performing?
-- [ ] What are some unique use cases for our applications?
-- [ ] How is input technology and interactions different in XR?
+- [x] What are some unique use cases for our applications?
+- [x] How is input technology and interactions different in XR?

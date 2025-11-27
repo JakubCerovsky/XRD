@@ -4,7 +4,7 @@ This AR application helps you find a specific book in a school library. The syst
 
 Below is a diagram explaining the flow of the application for user.
 
-![Sequence Diagram](./images/sequence_diagram.jpg)
+![Sequence Diagram](./images/ar_sequence_diagram.jpg)
 
 ### Use Cases
 
@@ -15,6 +15,14 @@ Below is a diagram explaining the flow of the application for user.
 **Librarian**: _“Where do I reshelve this?”_
 
 - Scan the book’s barcode/ISBN, instantly get the position and a shortest route back to its exact bay.
+
+### Blog Posts
+
+A series of blog post were managed across the development of this AR project. These posts depict the implementation process from all three weeks together with some decision explanation and design details.
+
+- [Lab Day 1](https://github.com/JakubCerovsky/XRD/blob/main/blogposts/lab_1.md)
+- [Lab Day 2](https://github.com/JakubCerovsky/XRD/blob/main/blogposts/lab_2.md)
+- [Lab Day 3](https://github.com/JakubCerovsky/XRD/blob/main/blogposts/lab_3.md)
 
 ### Video Demonstration
 
@@ -29,7 +37,7 @@ Below is a diagram explaining the flow of the application for user.
 
 ### Tools Used
 
-- [Unity 6](https://unity.com/)
+- [Unity 6.2](https://unity.com/)
 - [3D Scanner App](https://3dscannerapp.com/)
 - [Blender](https://www.blender.org/)
 

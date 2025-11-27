@@ -1,10 +1,8 @@
-# Title
-
-_Written by: NAME_
-
----
+# Lab Day 5
 
 ## Introduction
+
+In the second week of out development process, we have continued to work on our parts individually aiming to combine them together during the last lab.
 
 ---
 
@@ -39,3 +37,9 @@ This script expects an array of the Socket Scripts, and when invoked, checks thr
 ## Resources
 
 - [VR Development](https://learn.unity.com/pathway/vr-development?version=6.2)
+
+---
+
+_Written by: NAME_
+
+---
