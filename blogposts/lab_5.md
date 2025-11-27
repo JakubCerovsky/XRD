@@ -4,9 +4,18 @@
 
 In the second week of out development process, we have continued to work on our parts individually aiming to combine them together during the last lab.
 
----
-
 ## Progress
+
+### Task Division
+
+**Marcus:** Timer; Keypad;
+
+**Jakub:** Shapes puzzle; 
+
+**Cosmin:** Added racks to the environment; Cardboard box; Blender bomb;
+
+**Alex:** Electric box puzzle;
+
 
 ## Shapes Puzzle
 
@@ -30,16 +39,36 @@ This script expects an array of the Socket Scripts, and when invoked, checks thr
 
 ---
 
-## Reflections
+_Written by: Jakub_
 
 ---
+## Cardboard Box
+
+### Opening the box
+
+Initially, the box was supposed to be grabbable, but it added too much complexity, so we decided to make the position static (with the excuse of it being too heavy). 
+A script on the tape starts the bomb levitation and makes the cardboard box disappear when the player takes a cutter and makes a cutting motion on it. Initial functionality was similar to a button's functionality. 
+
+---
+
+_Written by: Cosmin_
+
+---
+## Electrical Box
+
+### Electric drill
+
+### Pliers
+
+---
+
+_Written by: Alex_
+
+---
+
+## Reflections
 
 ## Resources
 
 - [VR Development](https://learn.unity.com/pathway/vr-development?version=6.2)
 
----
-
-_Written by: NAME_
-
----
