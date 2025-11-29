@@ -64,7 +64,12 @@ namespace GuidanceLine
         private float gizmoSphereRadius = 0.1f;
 
         // Private variables
-        private LineRenderer lineRenderer;
+    [Header("Optional Overrides")]
+    [Tooltip("If you already have a LineRenderer (e.g. a CurvedLine GameObject), assign it here to be used instead of creating a new one.")]
+    [SerializeField]
+    private LineRenderer externalLineRenderer;
+
+    private LineRenderer lineRenderer;
         private NavMeshPath navMeshPath;
         private List<Vector3> currentCheckpoints = new List<Vector3>();
         private int currentCheckpointIndex = 0;
@@ -112,15 +117,40 @@ namespace GuidanceLine
 
         void InitializeLine()
         {
-            lineRenderer = GetComponent<LineRenderer>();
-            if (lineRenderer == null)
+            // Prefer an externally assigned LineRenderer (e.g. CurvedLine object) so visual can be placed in scene
+            if (externalLineRenderer != null)
             {
-                lineRenderer = gameObject.AddComponent<LineRenderer>();
+                lineRenderer = externalLineRenderer;
+            }
+            else
+            {
+                lineRenderer = GetComponent<LineRenderer>();
+                if (lineRenderer == null)
+                {
+                    lineRenderer = gameObject.AddComponent<LineRenderer>();
+                }
             }
 
+            // Configure widths
             lineRenderer.startWidth = lineWidth;
             lineRenderer.endWidth = lineWidth;
+            // Ensure the renderer is disabled until we have points
+            lineRenderer.enabled = false;
+
             navMeshPath = new NavMeshPath();
+        }
+
+        /// <summary>
+        /// Assign an external LineRenderer at runtime (e.g. CurvedLine created by another scene).
+        /// This will prefer the external renderer and re-initialize internal references.
+        /// </summary>
+        /// <param name="lr">LineRenderer to use for drawing the guidance line.</param>
+        public void SetExternalLineRenderer(LineRenderer lr)
+        {
+            externalLineRenderer = lr;
+            Debug.Log($"GuidanceLineAuto: External LineRenderer assigned -> { (lr != null ? lr.gameObject.name : "null") }");
+            // Re-initialize so internal 'lineRenderer' points to the external one and widths are applied
+            InitializeLine();
         }
 
         void Update()
@@ -238,10 +268,10 @@ namespace GuidanceLine
                 return;
             }
 
-            // Sample NavMesh to check if points are valid
+            // Sample NavMesh to check if points are valid (use configurable sample distance)
             NavMeshHit startHit, endHit;
-            bool startOnNavMesh = NavMesh.SamplePosition(startPoint.position, out startHit, 5f, navMeshAreaMask);
-            bool endOnNavMesh = NavMesh.SamplePosition(endPoint.position, out endHit, 5f, navMeshAreaMask);
+            bool startOnNavMesh = NavMesh.SamplePosition(startPoint.position, out startHit, navMeshSampleDistance, navMeshAreaMask);
+            bool endOnNavMesh = NavMesh.SamplePosition(endPoint.position, out endHit, navMeshSampleDistance, navMeshAreaMask);
 
             if (!startOnNavMesh || !endOnNavMesh)
             {
@@ -281,6 +311,17 @@ namespace GuidanceLine
             if (startPoint != null) lastStartPosition = startPoint.position;
             
             Debug.Log($"GuidanceLineAuto: Path calculated successfully! ({navMeshPath.corners.Length} corners)");
+
+            // Immediately draw the line so external LineRenderer (if assigned) receives positions without waiting for next Update
+            try
+            {
+                DrawCurvedLine();
+                Debug.Log($"GuidanceLineAuto: Drew curved line immediately after path calc. Checkpoints={currentCheckpoints.Count}");
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning($"GuidanceLineAuto: Exception while drawing line after path calc: {e.Message}");
+            }
         }
 
         void GenerateCheckpoints()
@@ -379,6 +420,14 @@ namespace GuidanceLine
             // Update LineRenderer
             lineRenderer.positionCount = allPoints.Length;
             lineRenderer.SetPositions(allPoints);
+            // Ensure renderer is visible when we have points
+            if (allPoints.Length > 0)
+            {
+                // Re-apply widths in case external renderer was assigned with different defaults
+                lineRenderer.startWidth = lineWidth;
+                lineRenderer.endWidth = lineWidth;
+                lineRenderer.enabled = true;
+            }
         }
 
         Vector3 CatmullRom(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)
