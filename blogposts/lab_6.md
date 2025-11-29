@@ -64,6 +64,10 @@ We have considered to remove the possibility for the player to grab/interact wit
 
 - [OpenXR](https://www.khronos.org/OpenXR/)
 - [XR Interaction Toolkit Examples](https://github.com/Unity-Technologies/XR-Interaction-Toolkit-Examples/blob/main/Documentation/index.md)
+- [Correct & Wrong sound effects](https://www.youtube.com/watch?v=jZbaGCcdU48)
+- [Explosion sound effect](https://www.youtube.com/watch?v=6Zla57jR6g4)
+- [Bomb ticking sound effect](https://www.youtube.com/watch?v=dsEpxHP5L4c)
+- [Key press and wire cut sound effects](https://www.youtube.com/watch?v=q8ZLBOFQ2g0)
 
 ---
 
