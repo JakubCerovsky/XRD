@@ -47,8 +47,12 @@ _Written by: Jakub_
 
 ### Opening the box
 
-Initially, the box was supposed to be grabbable, but it added too much complexity, so we decided to make the position static (with the excuse of it being too heavy). 
-A script on the tape starts the bomb levitation and makes the cardboard box disappear when the player takes a cutter and makes a cutting motion on it. Initial functionality was similar to a button's functionality. 
+Initially, the box was supposed to be grabbable, but it added too much complexity, so we decided to make the position static. 
+Despite the functionality not ending up in the game, the trial-and-error was still a good learning opportunity. The functionality of opening the box flaps manually required hinge joints, which are a versatile resource to use in the future.
+
+### Bomb reveal
+
+A script on the tape starts the bomb timer, thrusters, levitation and makes the cardboard box disappear when the player takes a cutter and makes a cutting motion on it. Initial functionality involved only pressing the tape with the tagged cutter object and making the box disappear. 
 
 ---
 
@@ -90,4 +94,5 @@ _Written by: Cosmin_
 ## Resources
 
 - [VR Development](https://learn.unity.com/pathway/vr-development?version=6.2)
-
+- [BoxCutter model](https://skfb.ly/6WSpq)
+- [Racks model](https://skfb.ly/6WwpV)

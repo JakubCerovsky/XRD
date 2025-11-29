@@ -100,6 +100,7 @@ Next week, we will continue by integrating the floating timer display, refining 
 - [VR Development](https://learn.unity.com/pathway/vr-development?version=6.2)
 - [ProBuilder](https://docs.unity3d.com/Packages/com.unity.probuilder@6.0/manual/index.html)
 - [Enviroment Model](https://sketchfab.com/3d-models/rock-wall-basement-with-baked-lighting-71912d43c4724e3ab12d9bf2be80f728)
+- [Cardboard Box](https://assetstore.unity.com/packages/3d/props/cardboard-boxes-with-tape-305511)
 - [Workplace Tools](https://assetstore.unity.com/packages/3d/props/industrial/workplace-tools-86242)
 - [Electrical Box](https://www.fab.com/listings/ca06bd2a-1dcb-4fd1-9bac-bb218a2435d4)
 
