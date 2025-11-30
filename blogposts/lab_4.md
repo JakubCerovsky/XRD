@@ -78,7 +78,7 @@ Also, Cosmin started creating the bomb model in Blender, which will be a floatin
 For the workplace tools, **Alex** was responsible for finding, importing, and setting up the necessary 3D models.  
 A collection of realistic **tool assets** — including screwdrivers, pliers, and other hand tools — was added to the project to enhance the immersion of the bomb defusal environment.
 
-These tools will then be prepared for future interaction scripts, such as the **screwing and unscrewing mechanism**, which will later allow players to open bomb panels and interact with the internal wires that will need to be cut.
+These tools will be prepared for future interaction scripts, such as the **screwing and unscrewing mechanism**, which allow players to remove the lid of an electrical box and access the internal wires to be cut. The box was modified in Blender so the lid is a separate but still-screwed component; in Unity, the electric drill and screwdriver models were combined to create a proper electric screwdriver with a tip, and the internal wires connected to two metal contact pieces were added.
 
 ## Reflections
 
@@ -100,7 +100,9 @@ Next week, we will continue by integrating the floating timer display, refining 
 - [VR Development](https://learn.unity.com/pathway/vr-development?version=6.2)
 - [ProBuilder](https://docs.unity3d.com/Packages/com.unity.probuilder@6.0/manual/index.html)
 - [Enviroment Model](https://sketchfab.com/3d-models/rock-wall-basement-with-baked-lighting-71912d43c4724e3ab12d9bf2be80f728)
+- [Cardboard Box](https://assetstore.unity.com/packages/3d/props/cardboard-boxes-with-tape-305511)
 - [Workplace Tools](https://assetstore.unity.com/packages/3d/props/industrial/workplace-tools-86242)
+- [Electrical Box](https://www.fab.com/listings/ca06bd2a-1dcb-4fd1-9bac-bb218a2435d4)
 
 ---
 
