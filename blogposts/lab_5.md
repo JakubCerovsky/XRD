@@ -110,5 +110,5 @@ _Written by: Cosmin_
 ## Resources
 
 - [VR Development](https://learn.unity.com/pathway/vr-development?version=6.2)
-- [BoxCutter model](https://skfb.ly/6WSpq)
-- [Racks model](https://skfb.ly/6WwpV)
+- [Box cutter/Utility knife Gameready](https://skfb.ly/6WSpq)
+- [Rack](https://skfb.ly/6WwpV)
