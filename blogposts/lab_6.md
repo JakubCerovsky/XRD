@@ -40,7 +40,7 @@ In short, OpenXR replaces multiple VR pipelines with one clean, standardized bui
 
 We have recorded a video gameplay from within the VR headset and the real-world palyer interactions with it.
 
-The video can be found here: [VR Bomb Puzzle Demo](https://example.com)
+The video can be found here: [VR Bomb Puzzle Demo](https://www.youtube.com/watch?v=-c5QlaMkBjM)
 
 ## Reflections
 

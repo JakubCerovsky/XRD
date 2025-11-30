@@ -11,17 +11,17 @@ Text file consitsing links to the repositories must be uploaded to WiseFlow befo
 
 - [x] Mobile AR Application
   - [x] Video Demonstration
-- [ ] HMD XR Application
-  - [ ] Video Demonstration
-- [ ] DevBlog
+- [x] HMD XR Application
+  - [x] Video Demonstration
+- [x] DevBlog
   - [ ] Team Reflections
   - [x] 1st Week
   - [x] Lab Week 1
   - [x] Lab Week 2
   - [x] Lab Week 3
   - [x] Lab Week 4
-  - [ ] Lab Week 5
-  - [ ] Lab Week 6
+  - [x] Lab Week 5
+  - [x] Lab Week 6
 
 ### Skill & Competencies
 
@@ -29,8 +29,8 @@ Text file consitsing links to the repositories must be uploaded to WiseFlow befo
 - [x] Develop virtual reality applications
 - [x] Demonstrate an understanding of XR technologies and their use cases
 - [x] Work with and reflect on the theory behind prominent challenges in the XR industry such as tracking, rendering, locomotion and input
-- [ ] Understand and reflect on underlying sensor and display technologies for XR hardware
-- [ ] Concieve apps and ideas that utilize the advantages of XR
+- [x] Understand and reflect on underlying sensor and display technologies for XR hardware
+- [x] Concieve apps and ideas that utilize the advantages of XR
 
 ### Answered Questions within DevBlogs
 
@@ -41,10 +41,10 @@ Text file consitsing links to the repositories must be uploaded to WiseFlow befo
 - [x] What challenges do advancements in AR face at the moment?
 - [ ] How is the Quest workflow different from creating ordinary desktop apps in Unity?
 - [x] What is the idea behind OpenXR?
-- [ ] Elaborate on 3 DOF and 6 DOF tracking?
+- [x] Elaborate on 3 DOF and 6 DOF tracking?
 - [ ] What technical improvements will we see to VR rendering and display technologies in the future?
 - [ ] What are important factors to immersion?
 - [x] How have we used HRTFs?
-- [ ] How are our apps performing?
+- [x] How are our apps performing?
 - [x] What are some unique use cases for our applications?
 - [x] How is input technology and interactions different in XR?
